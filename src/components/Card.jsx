@@ -13,12 +13,22 @@ function Card() {
   }, []);
 
   return (
-    <div className="bg-amber-300 flex flex-wrap">
-      {characters.map((character) => (
-        <div key={character.id}>
+    <div className="flex flex-wrap justify-center">
+      {characters.slice(0, 8).map((character) => (
+        <div
+          key={character.id}
+          className="bg-zinc-800 text-zinc-100 p-5 m-3 h-fit w-xs rounded-lg"
+        >
           <img src={character.image} alt={character.name} />
-          <p>{character.name}</p>
-          <p>{character.gender}</p>
+          <p className="pt-2 font-semibold">{character.name}</p>
+          <p>
+            <span className="text-sm font-semibold">Gender: </span>
+            {character.gender}
+          </p>
+          <p>
+            <span className="text-sm font-semibold">Status: </span>
+            {character.status}
+          </p>
         </div>
       ))}
     </div>

@@ -1,6 +1,6 @@
 function Header() {
   return (
-    <div className=" bg-blue-500 h-90 flex items-center justify-between pl-22 pr-22">
+    <div className="h-90 flex items-center justify-between pl-22 pr-22">
       <img className="w-xl" src="/src/assets/images/logo.png" alt="logo" />
       <img
         className="w-md"
