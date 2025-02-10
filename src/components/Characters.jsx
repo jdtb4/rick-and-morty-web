@@ -1,19 +1,32 @@
-import Card from "./Card";
+import Card from "./Card.jsx";
+import Search from "./Search";
+import Pagination from "./Pagination";
+import { useEffect, useState } from "react";
 
 function Characters() {
+  const [characters, setCharacters] = useState([]);
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    async function fetchCharacters() {
+      const response = await fetch(
+        `https://rickandmortyapi.com/api/character?page=${page}`
+      );
+      const data = await response.json();
+      setCharacters(data.results);
+    }
+    fetchCharacters();
+  }, [page]);
+
   return (
     <>
-      <div className="flex justify-between pl-32 pr-32 pb-7 mt-10">
-        <p className="bg-zinc-100 rounded py-2 px-5 uppercase font-semibold ">
-          Characters
-        </p>
-        <input
-          className="border-1 rounded border-zinc-100 p-2 w-1/4 text-zinc-100 focus:outline-none"
-          type="search"
-          placeholder="Search"
-        />
+      <Search page={page} />
+      <div className="px-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 text-zinc-100">
+        {characters.slice(0, 8).map((character) => (
+          <Card key={character.id} character={character} />
+        ))}
       </div>
-      <Card />
+      <Pagination setPage={setPage} />
     </>
   );
 }

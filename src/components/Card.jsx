@@ -1,36 +1,16 @@
-import { useEffect, useState } from "react";
-
-function Card() {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    async function fetchCharacters() {
-      const response = await fetch("https://rickandmortyapi.com/api/character");
-      const data = await response.json();
-      setCharacters(data.results);
-    }
-    fetchCharacters();
-  }, []);
-
+function Card({ character }) {
   return (
-    <div className="flex flex-wrap justify-center">
-      {characters.slice(0, 8).map((character) => (
-        <div
-          key={character.id}
-          className="bg-zinc-800 text-zinc-100 p-5 m-3 h-fit w-xs rounded-lg"
-        >
-          <img src={character.image} alt={character.name} />
-          <p className="pt-2 font-semibold">{character.name}</p>
-          <p>
-            <span className="text-sm font-semibold">Gender: </span>
-            {character.gender}
-          </p>
-          <p>
-            <span className="text-sm font-semibold">Status: </span>
-            {character.status}
-          </p>
-        </div>
-      ))}
+    <div className="bg-gray-900 p-5 rounded-lg shadow-md shadow-cyan-300 transition-all hover:scale-105">
+      <img className="rounded" src={character.image} alt={character.name} />
+      <p className="pt-2 text-cyan-500 font-semibold">{character.name}</p>
+      <p className="text-sm">
+        <span className="text-sm text-cyan-500 font-semibold">Species: </span>
+        {character.species}
+      </p>
+      <p className="text-sm">
+        <span className="text-sm text-cyan-500 font-semibold">Status: </span>
+        {character.status}
+      </p>
     </div>
   );
 }
