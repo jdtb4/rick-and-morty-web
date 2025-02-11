@@ -7,6 +7,7 @@ function Characters() {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
 
   async function fetchCharacters() {
     let url = `https://rickandmortyapi.com/api/character?page=${page}`;
@@ -21,6 +22,7 @@ function Characters() {
 
       if (data.results) {
         setCharacters(data.results);
+        setTotalPages(data.info.pages);
       } else {
         setCharacters([]);
       }
@@ -42,11 +44,11 @@ function Characters() {
         fetchCharacters={fetchCharacters}
       />
       <div className="px-32 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 text-zinc-100">
-        {characters.slice(0, 8).map((character) => (
+        {characters.map((character) => (
           <Card key={character.name} character={character} />
         ))}
       </div>
-      <Pagination page={page} setPage={setPage} />
+      <Pagination page={page} setPage={setPage} totalPages={totalPages} />
     </>
   );
 }

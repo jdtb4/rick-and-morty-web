@@ -1,20 +1,62 @@
-function Pagination({ page, setPage }) {
+function Pagination({ page, setPage, totalPages }) {
+  const maxPageShown = 2;
+  const lasPagesShown = 3;
+
+  const generatePageNumbers = () => {
+    let pages = [];
+
+    if (totalPages <= maxPageShown + lasPagesShown) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      for (let i = 1; i <= maxPageShown; i++) {
+        pages.push(i);
+      }
+      pages.push("...");
+      for (let i = totalPages - lasPagesShown + 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    }
+    return pages;
+  };
+
   return (
     <div className="flex justify-center gap-7 m-10">
       <button
-        className="bg-gray-700 p-4 rounded-full hover:bg-cyan-500 transition-all ease-in-out duration-300"
         onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+        disabled={page === 1}
+        className="px-3 py-1 rounded-lg bg-gray-800 text-white font-bold cursor-pointer disabled:opacity-50"
       >
-        <img className="rotate-180 w-4" src="public/arrow-next.svg" />
+        ‹
       </button>
-      <p className="text-cyan-500 text-lg font-bold flex items-center">
-        {page}
-      </p>
+
+      {generatePageNumbers().map((num, index) =>
+        num === "..." ? (
+          <span key={index} className="px-3 py-1 text-gray-400">
+            {num}
+          </span>
+        ) : (
+          <button
+            key={index}
+            onClick={() => setPage(num)}
+            className={`px-3 py-1 rounded-lg cursor-pointer ${
+              page === num
+                ? "bg-cyan-500 text-balck font-bold"
+                : "bg-gray-800 text-white font-bold"
+            }`}
+          >
+            {num}
+          </button>
+        )
+      )}
+
       <button
-        className="bg-gray-700 p-4 rounded-full hover:bg-cyan-500 transition-all ease-in-out duration-300"
-        onClick={() => setPage((prev) => prev + 1)}
+        onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+        disabled={page === totalPages}
+        className="px-3 py-1 rounded-lg bg-gray-800 text-white font-bold cursor-pointer disabled:opacity-50"
       >
-        <img className="w-4" src="public/arrow-next.svg" loading="lazy" />
+        ›
       </button>
     </div>
   );

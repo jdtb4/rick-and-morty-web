@@ -7,10 +7,10 @@ function Search({ search, setSearch, fetchCharacters }) {
           placeholder="Search..."
           onChange={(e) => setSearch(e.target.value)}
           value={search}
-          className="bg-transparent border-none outline-none px-2 text-white placeholder-gray-500"
+          className="bg-transparent border-none outline-none px-2 text-white placeholder-gray-400"
         />
         <button
-          className="p-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg"
+          className="p-2 bg-cyan-500 hover:bg-cyan-600 rounded-lg cursor-pointer"
           onClick={() => fetchCharacters(search)}
         >
           <img className="w-4" src="/public/icon-search.svg"></img>
